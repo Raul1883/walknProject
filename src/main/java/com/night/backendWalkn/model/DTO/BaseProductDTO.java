@@ -1,12 +1,19 @@
 package com.night.backendWalkn.model.DTO;
+
 import com.night.backendWalkn.model.enums.Season;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Map;
 
 @Data
-public abstract class ProductDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public abstract class BaseProductDTO {
     @NotBlank(message = "{dto.product.brand.required}")
     private String brand;
 
@@ -21,4 +28,10 @@ public abstract class ProductDTO {
 
     @NotNull(message = "{dto.product.season.required}")
     private Season season;
+
+
+    // возможно здесь можно сделать общую логику, но я уверен что будет расширение.
+    public abstract Map<String, Object> getAttributes();
+
+    public abstract void setAttributes(Map<String, Object> attributes);
 }
