@@ -5,9 +5,11 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class ShoeDTO {
+@EqualsAndHashCode(callSuper = true)
+public class ShoeDTO extends ProductDTO {
 
     @Min(value = 35, message = "{dto.shoe.size.min}")
     @Max(value = 50, message = "{dto.shoe.size.min}")

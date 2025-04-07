@@ -4,11 +4,11 @@ import com.night.backendWalkn.model.enums.ClothingSize;
 import com.night.backendWalkn.model.enums.ClothingType;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class ClothingDTO {
-
-
+@EqualsAndHashCode(callSuper = true)
+public class ClothingDTO extends ProductDTO {
     @NotNull(message = "{dto.clothing.size.required}")
     private ClothingSize size;
 
