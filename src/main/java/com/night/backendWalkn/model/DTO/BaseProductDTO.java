@@ -14,6 +14,8 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class BaseProductDTO {
+    private Long id;
+
     @NotBlank(message = "{dto.product.brand.required}")
     private String brand;
 

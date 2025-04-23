@@ -1,8 +1,9 @@
 package com.night.backendWalkn.model.DTO;
 
-import com.night.backendWalkn.model.enums.Season;
 import com.night.backendWalkn.model.enums.ShoeType;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,13 +22,6 @@ public class ShoeDTO extends BaseProductDTO {
 
     @NotNull(message = "{dto.shoe.type.required}")
     private ShoeType type;
-
-
-    public ShoeDTO(String brand, String model, String color, int cost, Season season, int size, ShoeType type) {
-        super(brand, model, color, cost, season);
-        this.setSize(size);
-        this.setType(type);
-    }
 
     @Override
     public Map<String, Object> getAttributes() {
