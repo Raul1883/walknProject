@@ -1,7 +1,7 @@
 package com.night.backendWalkn.controller;
 
 
-import com.night.backendWalkn.Service.ProductService;
+import com.night.backendWalkn.service.ProductService;
 import com.night.backendWalkn.model.DTO.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.night.backendWalkn.Service;
+package com.night.backendWalkn.service;
 
 import com.night.backendWalkn.mappers.BaseProductMapper;
 import com.night.backendWalkn.model.DTO.BaseProductDTO;

@@ -1,4 +1,4 @@
-package com.night.backendWalkn.Service;
+package com.night.backendWalkn.service;
 
 import com.night.backendWalkn.model.entities.CustomerOrder;
 import com.night.backendWalkn.model.enums.OrderStatus;
