@@ -1,10 +1,12 @@
 package com.night.backendWalkn.service;
 
+import com.night.backendWalkn.events.OrderCreatedEvent;
 import com.night.backendWalkn.model.entities.CustomerOrder;
 import com.night.backendWalkn.model.enums.OrderStatus;
 import com.night.backendWalkn.repository.OrderRepository;
 import com.night.backendWalkn.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
@@ -16,6 +18,7 @@ import java.util.NoSuchElementException;
 public class OrderService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     public List<CustomerOrder> getOrders() {
         return orderRepository.findAll();
@@ -30,6 +33,7 @@ public class OrderService {
     public CustomerOrder createNewOrder(CustomerOrder order) {
         order.setCreatedAt(OffsetDateTime.now());
         orderRepository.save(order);
+        eventPublisher.publishEvent(new OrderCreatedEvent(order.getId()));
         return order;
     }
 

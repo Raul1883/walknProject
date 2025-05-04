@@ -13,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class TokenAuthFilter extends OncePerRequestFilter {
@@ -30,7 +31,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 
         String token = request.getHeader("Authorization");
 
-        if (!token.equals(appProperties.getAuthToken())) {
+        if (Objects.isNull(token) || !token.equals(appProperties.getAuthToken())) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
             return;
         }
