@@ -1,14 +1,22 @@
-# Используем официальный JDK 21
 FROM eclipse-temurin:21-jdk-alpine AS build
 WORKDIR /app
 
-# Копируем gradle wrapper и зависимости
+# Кешируем зависимости Gradle (в том числе wrapper)
+COPY gradle gradle
+COPY gradlew .
+COPY build.gradle .
+COPY settings.gradle .
+RUN ./gradlew --version
+
+# Копируем оставшийся проект
 COPY . .
+
+# Скачиваем зависимости (если они не изменились, слой будет кеширован)
+RUN ./gradlew dependencies --no-daemon
 
 # Собираем jar
 RUN ./gradlew bootJar --no-daemon
 
-# Новый слой — только runtime
 FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 

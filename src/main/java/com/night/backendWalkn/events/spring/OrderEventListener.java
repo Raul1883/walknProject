@@ -1,7 +1,10 @@
 package com.night.backendWalkn.events.spring;
 
 
+import com.night.backendWalkn.events.kafka.KafkaOrderCreatedEvent;
 import com.night.backendWalkn.events.kafka.OrderEventProducer;
+import com.night.backendWalkn.service.OrderService;
+import com.night.backendWalkn.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -11,10 +14,12 @@ import org.springframework.stereotype.Component;
 public class OrderEventListener {
 
     private final OrderEventProducer producer;
+    private final ProductService productService;
+    private final OrderService orderService;
 
     @EventListener
-    public void handleOrderCreated(OrderCreatedEvent event) {
-        producer.sendOrderCreated(
-                new com.night.backendWalkn.events.kafka.OrderCreatedEvent(event.getId()));
+    public void handleOrderCreated(SpringOrderCreatedEvent event) {
+        producer.sendOrderCreated(KafkaOrderCreatedEvent.fromOrder(
+                orderService.getOrderByID(event.getId()), productService));
     }
 }

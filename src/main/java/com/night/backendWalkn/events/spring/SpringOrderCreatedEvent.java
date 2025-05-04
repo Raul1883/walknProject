@@ -5,6 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class OrderCreatedEvent {
+public class SpringOrderCreatedEvent {
     private final Long id;
 }

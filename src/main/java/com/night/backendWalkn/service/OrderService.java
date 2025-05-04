@@ -1,6 +1,6 @@
 package com.night.backendWalkn.service;
 
-import com.night.backendWalkn.events.spring.OrderCreatedEvent;
+import com.night.backendWalkn.events.spring.SpringOrderCreatedEvent;
 import com.night.backendWalkn.model.entities.CustomerOrder;
 import com.night.backendWalkn.model.enums.OrderStatus;
 import com.night.backendWalkn.repository.OrderRepository;
@@ -33,7 +33,7 @@ public class OrderService {
     public CustomerOrder createNewOrder(CustomerOrder order) {
         order.setCreatedAt(OffsetDateTime.now());
         orderRepository.save(order);
-        eventPublisher.publishEvent(new OrderCreatedEvent(order.getId()));
+        eventPublisher.publishEvent(new SpringOrderCreatedEvent(order.getId()));
         return order;
     }
 

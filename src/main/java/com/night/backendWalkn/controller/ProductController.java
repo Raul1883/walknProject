@@ -33,19 +33,19 @@ public class ProductController {
     }
 
     @PostMapping("/create/clothing")
-    public ResponseEntity<BaseProductDTO> createShoe(@RequestBody @Valid ClothingDTO dto) {
+    public ResponseEntity<BaseProductDTO> createClothing(@RequestBody @Valid ClothingDTO dto) {
         service.SaveProduct(dto);
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping("/create/outerwear")
-    public ResponseEntity<BaseProductDTO> createShoe(@RequestBody @Valid OuterwearDTO dto) {
+    public ResponseEntity<BaseProductDTO> createOuterwear(@RequestBody @Valid OuterwearDTO dto) {
         service.SaveProduct(dto);
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping("/create/pants")
-    public ResponseEntity<BaseProductDTO> createShoe(@RequestBody @Valid PantsDTO dto) {
+    public ResponseEntity<BaseProductDTO> createPants(@RequestBody @Valid PantsDTO dto) {
         service.SaveProduct(dto);
         return ResponseEntity.ok(dto);
     }
