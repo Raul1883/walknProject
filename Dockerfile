@@ -1,6 +1,8 @@
 FROM eclipse-temurin:21-jdk-alpine AS build
 WORKDIR /app
 
+ENV SPRING_PROFILES_ACTIVE=docker
+
 # Кешируем зависимости Gradle (в том числе wrapper)
 COPY gradle gradle
 COPY gradlew .
