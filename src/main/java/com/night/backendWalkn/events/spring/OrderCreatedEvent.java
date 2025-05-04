@@ -1,4 +1,4 @@
-package com.night.backendWalkn.events;
+package com.night.backendWalkn.events.spring;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

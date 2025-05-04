@@ -1,6 +1,6 @@
 package com.night.backendWalkn.service;
 
-import com.night.backendWalkn.events.OrderCreatedEvent;
+import com.night.backendWalkn.events.spring.OrderCreatedEvent;
 import com.night.backendWalkn.model.entities.CustomerOrder;
 import com.night.backendWalkn.model.enums.OrderStatus;
 import com.night.backendWalkn.repository.OrderRepository;
