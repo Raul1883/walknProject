@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: walkn-postgres
+    environment:
+      POSTGRES_DB: walkn
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - walkn-net
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: walkn-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+    networks:
+      - walkn-net
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: walkn-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: walkn-zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://walkn-kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - walkn-net
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    ports:
+      - "8080:8080"
+    environment:
+      DYNAMIC_CONFIG_ENABLED: 'true'
+      KAFKA_CLUSTERS_0_NAME: walkn-cluster
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: walkn-kafka:9092
+    depends_on:
+      - kafka
+    networks:
+      - walkn-net
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: walkn-app
+    depends_on:
+      - postgres
+      - kafka
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/walkn
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: walkn-kafka:9092
+    networks:
+      - walkn-net
+
+volumes:
+  pgdata:
+
+networks:
+  walkn-net:
