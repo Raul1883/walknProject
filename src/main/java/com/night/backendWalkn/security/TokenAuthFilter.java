@@ -5,6 +5,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,22 +18,19 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
+@RequiredArgsConstructor
 public class TokenAuthFilter extends OncePerRequestFilter {
     /// Класс "Костыль", позволяющий использовать постоянный токен авторизации.
     // Сделано по причине того, что это API будет использоваться только мной, возможно я заменю это на нормальную авторизацию через jwt
 
     private final AppProperties appProperties;
 
-    public TokenAuthFilter(AppProperties appProperties) {
-        this.appProperties = appProperties;
-    }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
         String token = request.getHeader("Authorization");
 
-        if (Objects.isNull(token) || !token.equals(appProperties.getAuthToken())) {
+        if (!isSwaggerDock(request) &
+                (Objects.isNull(token) || !token.equals(appProperties.getAuthToken()))) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
             return;
         }
@@ -44,5 +43,10 @@ public class TokenAuthFilter extends OncePerRequestFilter {
                 .setAuthentication(auth);
 
         filterChain.doFilter(request, response);
+    }
+
+    private boolean isSwaggerDock(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return path.contains("swagger") | path.contains("v3");
     }
 }

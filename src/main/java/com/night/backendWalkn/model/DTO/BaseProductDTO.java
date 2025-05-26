@@ -1,6 +1,7 @@
 package com.night.backendWalkn.model.DTO;
 
 import com.night.backendWalkn.model.enums.Season;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -13,6 +14,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "Пользователь")
 public abstract class BaseProductDTO {
     private Long id;
 
