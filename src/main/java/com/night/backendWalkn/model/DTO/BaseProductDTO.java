@@ -14,7 +14,6 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Пользователь")
 public abstract class BaseProductDTO {
     private Long id;
 
