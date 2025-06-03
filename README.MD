@@ -3,6 +3,7 @@
 Api для магазина обуви и одежды. Позволяет управлять товарами и заказами.
 
 ## Как запустить?
+Убедиться, что spring.profiles.active=docker
 docker-compose up --build
 
 ## Swagger openapi
