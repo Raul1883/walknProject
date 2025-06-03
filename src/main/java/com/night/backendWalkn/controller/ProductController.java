@@ -1,8 +1,9 @@
 package com.night.backendWalkn.controller;
 
 
-import com.night.backendWalkn.service.ProductService;
 import com.night.backendWalkn.model.DTO.*;
+import com.night.backendWalkn.model.enums.Season;
+import com.night.backendWalkn.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,23 @@ public class ProductController {
     private final ProductService service;
 
     @GetMapping("/products")
-    public ResponseEntity<List<BaseProductDTO>> getAllProducts() {
-        return ResponseEntity.ok(service.GetAllProductDto());
+    public ResponseEntity<List<BaseProductDTO>> getProducts(
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String model,
+            @RequestParam(required = false) String color,
+            @RequestParam(required = false) Season season,
+            @RequestParam(required = false) Integer minCost,
+            @RequestParam(required = false) Integer maxCost
+                                                           ) {
+        ProductFilterRequest filter = new ProductFilterRequest();
+        filter.brand = brand;
+        filter.model = model;
+        filter.color = color;
+        filter.season = season;
+        filter.minCost = minCost;
+        filter.maxCost = maxCost;
+
+        return ResponseEntity.ok(service.findByFilter(filter));
     }
 
     @GetMapping("/products/{id}")
